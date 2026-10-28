@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quản lý lịch tập xe | Bình Tân</title>
+<script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
+<style>
+:root{--blue:#155eef;--navy:#12345a;--bg:#f3f6fb;--line:#dbe4f0;--text:#1d2939;--muted:#667085;--green:#067647;--red:#b42318}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 Arial,Helvetica,sans-serif}.top{background:linear-gradient(120deg,#12345a,#155eef);color:white;padding:22px max(18px,calc((100% - 1440px)/2));}.top h1{margin:0 0 5px;font-size:24px}.top p{margin:0;color:#e4edff}.wrap{max-width:1440px;margin:20px auto;padding:0 18px}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}.stat,.panel{background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 2px 8px #102a4308}.stat{padding:14px 18px}.stat small{display:block;color:var(--muted)}.stat strong{font-size:24px;color:var(--navy)}.layout{display:grid;grid-template-columns:330px 1fr;gap:16px;align-items:start}.panel{padding:18px;margin-bottom:16px}.panel h2{font-size:17px;margin:0 0 14px}.formgrid{display:grid;grid-template-columns:1fr;gap:11px}label{display:block;font-size:12px;font-weight:700;color:#475467;margin-bottom:5px}input,select,textarea{width:100%;border:1px solid #cbd5e1;border-radius:8px;padding:10px;font:inherit;background:#fff;color:var(--text)}input:focus,select:focus{outline:2px solid #c7d7fe;border-color:var(--blue)}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.btn{border:0;border-radius:8px;padding:10px 13px;font-weight:700;cursor:pointer}.primary{background:var(--blue);color:#fff}.secondary{background:#eef4ff;color:#1849a9}.plain{background:#f2f4f7;color:#344054}.danger{background:#fef3f2;color:var(--red)}.toolbar{display:flex;gap:10px;align-items:end;flex-wrap:wrap;margin-bottom:14px}.toolbar>div{min-width:150px;flex:1}.class-section{margin-bottom:16px}.class-title{margin:0;padding:10px 12px;background:#f0f6ff;border:1px solid var(--line);border-bottom:0;border-radius:10px 10px 0 0;color:#173f75;font-size:14px}.class-section .tablewrap{border-radius:0 0 10px 10px}.toolbar .btns{margin:0}.hint{font-size:12px;color:var(--muted);margin-top:10px}.notice{padding:10px 12px;border-radius:8px;margin:10px 0;display:none}.notice.error{display:block;background:#fef3f2;color:#b42318}.notice.ok{display:block;background:#ecfdf3;color:#067647}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:10px}table{border-collapse:collapse;width:100%;min-width:860px;background:white}th,td{border:1px solid var(--line);padding:8px;text-align:center;vertical-align:middle}thead th{background:#eaf2ff;color:#173f75;font-size:12px}tbody th{background:#f8fafc;min-width:85px}.gridcell{min-width:90px;height:43px;background:#fff}.entry{display:block;background:#eaf2ff;border:1px solid #b2ccff;border-radius:6px;color:#1849a9;padding:5px;font-size:12px;font-weight:700;cursor:pointer;white-space:pre-line}.entry small{display:block;font-weight:400;color:#344054;margin-top:2px}.empty{color:#c0c8d4}.subhead{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:12px}.subhead h2{margin:0}.listtable{min-width:700px}.listtable td{font-size:13px}.actions button{margin:2px;padding:5px 7px;font-size:12px}.foot{color:var(--muted);font-size:12px;padding:5px 0 22px}.badge{background:#ecfdf3;color:#067647;border-radius:20px;padding:4px 8px;font-size:11px;font-weight:700}
+@media(max-width:980px){.layout{grid-template-columns:1fr}.formgrid{grid-template-columns:repeat(2,1fr)}.formgrid .full{grid-column:1/-1}}@media(max-width:600px){.cards{grid-template-columns:1fr}.formgrid{grid-template-columns:1fr}.top h1{font-size:20px}.wrap{padding:0 10px}.panel{padding:12px}}
+@media print{ @page{size:A4 landscape;margin:7mm} body{background:#fff;font-size:10px}.top{display:none!important}.wrap{max-width:none;margin:0;padding:0}.layout,.cards,.no-print,.foot,.detail-panel{display:none!important}.print-only{display:block!important}.print-page{page-break-after:always;break-after:page;padding:0;margin:0}.print-page:last-child{page-break-after:auto;break-after:auto}.print-page h2{display:none!important}.print-page .print-date{text-align:center;margin:0 0 8px;font-size:17px;font-weight:bold;line-height:1.2}.print-page table{min-width:0;width:100%;table-layout:fixed;font-size:11px;border-collapse:collapse;margin-bottom:8px}.print-page th,.print-page td{border:1px solid #333;padding:4px 2px;text-align:center;vertical-align:middle;height:30px}.print-page thead th{background:#eee!important;color:#111}.print-page th:first-child{width:7%}.print-page .teacher-cell{font-weight:600}.print-title{display:none!important}.total-row th,.total-row td{font-weight:700;background:#f0f6ff!important}.print-class-label{font-size:12px;font-weight:bold;text-align:center;margin:3px 0}.print-page .print-date{color:#111}}
+.total-row th,.total-row td{font-weight:700;background:#f0f6ff}.grand-total-row th{font-weight:700;background:#eaf2ff;text-align:right}.print-title{display:none}.print-only{display:none}
+.timechecks{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}.timechecks label.tc{display:flex;align-items:center;gap:6px;margin:0;padding:7px 8px;border:1px solid #cbd5e1;border-radius:8px;font-weight:600;cursor:pointer;background:#fff;color:var(--text)}.timechecks input{width:auto;margin:0;accent-color:var(--blue)}.timechecks label.tc:has(input:checked){background:#eaf2ff;border-color:var(--blue);color:#1849a9}.quickpick{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.quickpick .btn{padding:6px 10px;font-size:12px}
+
+.teacher-hours-page{display:none;max-width:1100px;margin:20px auto;padding:0 18px}.hours-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.hours-sheet{background:#fff;border:1px solid #d0d5dd;padding:18px;overflow:auto}.hours-sheet h2{text-align:center;font-size:20px;margin:18px 0 26px}.hours-class-block{margin-bottom:28px}.hours-class-block h2{margin:18px 0 16px}.hours-table tfoot td{font-weight:bold}.hours-table .sum-row td:nth-child(3),.hours-table .sum-row td:nth-child(4){color:#f04438}.hours-sheet .company{text-align:left;font-weight:bold;font-size:17px}.hours-table{border-collapse:collapse;width:100%;min-width:620px;font-family:Arial,sans-serif}.hours-table th,.hours-table td{border:1px solid #333;padding:7px;text-align:center}.hours-table thead th{background:#f8fafc;color:#111;font-size:14px}.hours-table td.name{text-align:left}.hours-table input{border:0;border-radius:0;padding:5px;background:transparent;min-width:70px}.hours-table input:focus{outline:1px solid #155eef}.hours-table .teacher-name{min-width:130px}.hours-table .sum-row{font-weight:bold}.hours-table .sum-row td:nth-child(3){color:#f04438}.hours-actions{display:flex;gap:8px;flex-wrap:wrap}.back-button{margin-left:8px}@media print{body.print-hours .top,body.print-hours .wrap,body.print-payment .top,body.print-payment .wrap,body.print-payment #teacherHoursPage{display:none!important}body.print-hours .teacher-hours-page{display:block!important;margin:0;padding:0}body.print-payment #teacherPaymentPage{display:block!important;margin:0;padding:0}.teacher-hours-page .no-print{display:none!important}.hours-sheet{border:0;padding:0}.hours-table input{padding:0}body.print-payment .hours-toolbar{display:none!important}body.print-payment .hours-sheet{border:0;padding:0}body.print-payment #paymentTable{width:100%;min-width:0}body.print-payment #paymentTable th,body.print-payment #paymentTable td{border:1px solid #333;padding:5px}body.print-payment #paymentTable thead th{background:#a9d18e!important;color:#111}}
+</style></head>
+<body>
+<header class="top"><h1>🚗 QUẢN LÝ LỊCH TẬP XE – BÌNH TÂN</h1><p>Sắp xếp theo số xe, giáo viên và khung giờ • In lịch • Xuất Excel</p><div class="btns"><button class="btn secondary" type="button" id="openSchedule">📅 Lịch tập</button><button class="btn secondary" type="button" id="openTeacherHours">📋 Sổ giờ giáo viên</button><button class="btn secondary" type="button" id="openPaymentFromHome">💰 Trang tính tiền</button><button class="btn secondary" type="button" id="backupBtn">💾 Sao lưu</button><button class="btn secondary" type="button" id="restoreBtn">📂 Khôi phục</button><input type="file" id="restoreFile" accept=".json,application/json" hidden></div></header>
+<div class="wrap">
+<div class="cards"><div class="stat"><small>Số lịch trong ngày xem</small><strong id="statTotal">0</strong></div><div class="stat"><small>Số xe có lịch (ngày xem)</small><strong id="statCars">0</strong></div><div class="stat"><small>Giáo viên có lịch (ngày xem)</small><strong id="statTeachers">0</strong></div></div>
+<div class="layout no-print">
+<section class="panel"><h2 id="formTitle">➕ Nhập lịch tập</h2><form id="scheduleForm"><input type="hidden" id="editId"><div class="formgrid">
+<div><label for="date">Ngày tập *</label><input id="date" type="date" required></div>
+<div><label for="vehicleClass">Hạng xe *</label><select id="vehicleClass" required><option value="B tự động">B tự động</option><option value="B số sàn">B (Số sàn)</option><option value="C1">C1</option></select></div>
+<div><label for="car">Số xe *</label><input id="car" list="carOptions" placeholder="VD: 93" required><datalist id="carOptions"></datalist></div>
+<div><label for="teacher">Tên giáo viên *</label><input id="teacher" list="teacherOptions" placeholder="Nhập tên giáo viên" required><datalist id="teacherOptions"></datalist></div>
+<div class="full"><label>Khung giờ * <span style="font-weight:400;color:var(--muted)">(tích chọn một hoặc nhiều)</span></label><div id="timeChecks" class="timechecks"><label class="tc"><input type="checkbox" value="7h00 - 8h00"><span>7h00 - 8h00</span></label><label class="tc"><input type="checkbox" value="8h00 - 9h00"><span>8h00 - 9h00</span></label><label class="tc"><input type="checkbox" value="9h00 - 10h00"><span>9h00 - 10h00</span></label><label class="tc"><input type="checkbox" value="10h00 - 11h00"><span>10h00 - 11h00</span></label><label class="tc"><input type="checkbox" value="11h00 - 12h00"><span>11h00 - 12h00</span></label><label class="tc"><input type="checkbox" value="12h00 - 13h00"><span>12h00 - 13h00</span></label><label class="tc"><input type="checkbox" value="13h00 - 14h00"><span>13h00 - 14h00</span></label><label class="tc"><input type="checkbox" value="14h00 - 15h00"><span>14h00 - 15h00</span></label><label class="tc"><input type="checkbox" value="15h00 - 16h00"><span>15h00 - 16h00</span></label><label class="tc"><input type="checkbox" value="16h00 - 17h00"><span>16h00 - 17h00</span></label><label class="tc"><input type="checkbox" value="17h00 - 18h00"><span>17h00 - 18h00</span></label><label class="tc"><input type="checkbox" value="18h00 - 19h00"><span>18h00 - 19h00</span></label></div><div class="quickpick"><button type="button" class="btn plain" data-pick="am">Sáng</button><button type="button" class="btn plain" data-pick="pm">Chiều</button><button type="button" class="btn plain" data-pick="all">Cả ngày</button><button type="button" class="btn plain" data-pick="none">Bỏ chọn</button></div></div>
+<div class="full"><label for="note">Ghi chú</label><input id="note" placeholder="Thông tin thêm (nếu có)"></div></div><div id="notice" class="notice"></div><div class="btns"><button class="btn primary" type="submit" id="saveBtn">Lưu lịch tập</button><button class="btn plain" type="button" id="resetBtn">Làm mới</button></div></form><p class="hint">Mẹo: có thể nhập số xe và tên giáo viên mới trực tiếp. Danh sách sẽ tự ghi nhớ trên trình duyệt này.</p></section>
+<section class="panel"><div class="subhead"><h2>📋 Lịch theo ngày</h2><span class="badge">Dạng bảng giống file mẫu</span></div><div class="toolbar"><div><label for="viewDate">Ngày xem lịch</label><input id="viewDate" type="date"></div><div><label for="filterClass">Lọc hạng xe</label><select id="filterClass"><option value="">Tất cả hạng xe</option><option>B tự động</option><option>B số sàn</option><option>C1</option></select></div><div><label for="filterCar">Lọc số xe</label><input id="filterCar" placeholder="Tất cả xe"></div><div><label for="filterTeacher">Lọc giáo viên</label><input id="filterTeacher" placeholder="Tất cả giáo viên"></div><div class="btns"><button class="btn secondary" id="todayBtn" type="button">Hôm nay</button><button class="btn plain" id="clearFilters" type="button">Xóa lọc</button></div></div><div id="gridArea"></div></section>
+</div>
+<section class="panel detail-panel"><div class="subhead"><h2>🗓️ Danh sách lịch chi tiết</h2><div class="btns no-print"><button class="btn secondary" id="printBtn">🖨️ In lịch</button><button class="btn danger" id="clearAllBtn">🗑 Xóa tất cả lịch</button><button class="btn primary" id="exportBtn">⬇ Xuất Excel</button></div></div><div class="print-title"><h2 id="printHeading"></h2></div><div class="tablewrap"><table class="listtable"><thead><tr><th>Ngày tập</th><th>Hạng xe</th><th>Khung giờ</th><th>Số xe</th><th>Giáo viên</th><th>Ghi chú</th><th class="no-print">Thao tác</th></tr></thead><tbody id="detailBody"></tbody></table></div><p class="hint no-print">Giáo viên được trùng lịch tối đa 2 giờ liên tiếp, không phân biệt hạng xe. Một giáo viên không quá 2 lịch đồng thời trong cùng khung giờ; một xe không được trùng lịch.</p></section>
+<div id="printGridArea" class="print-only"></div><div class="foot">Bản mẫu chạy trực tiếp trên trình duyệt. Dữ liệu được lưu cục bộ trên thiết bị bạn đang sử dụng.</div>
+</div>
+
+<section id="teacherHoursPage" class="teacher-hours-page">
+  <div class="hours-toolbar no-print"><button class="btn secondary" type="button" id="backToSchedule">← Quay lại lịch tập</button><button class="btn primary" type="button" id="addTeacherHour">＋ Thêm giáo viên</button><button class="btn secondary" type="button" id="printTeacherHours">🖨 In biểu mẫu</button><button class="btn primary" type="button" id="exportTeacherHours">⬇ Xuất Excel</button><button class="btn danger" type="button" id="clearTeacherHours">Xóa dữ liệu giờ</button><label style="margin:0;display:flex;align-items:center;gap:6px">Tháng<input type="month" id="hoursMonth" style="width:auto"></label><button class="btn secondary" type="button" id="fillFromSchedule">⚙ Điền giờ đăng kí từ lịch</button></div>
+  <div class="hours-sheet"><div class="company">CÔNG TY TNHH ĐÀO TẠO LÁI XE BÌNH TÂN</div>
+  <div id="teacherHoursTables"></div>
+  <p style="font-size:12px;color:#667085" class="no-print">Nhập tên giáo viên và số giờ trực tiếp vào bảng. Dữ liệu tự lưu trên trình duyệt đang sử dụng.</p></div>
+</section>
+
+<section id="teacherPaymentPage" class="teacher-hours-page">
+  <div class="hours-toolbar no-print">
+    <button class="btn secondary" type="button" id="backToHours">← Quay lại sổ giờ</button>
+    <label style="margin:0;min-width:210px">Ngày / tiêu đề bảng<input id="paymentTitleDate" type="text" value="Tiền dạy Thiết bị Sát Hạch" style="margin-top:5px"></label>
+    <label style="margin:0;min-width:130px">Đơn giá mỗi giờ (đ)<input id="hourlyRate" type="number" min="0" step="1000" value="50000" style="margin-top:5px"></label>
+    <button class="btn secondary" type="button" id="printPayment">🖨 In bảng tính tiền</button>
+    <button class="btn primary" type="button" id="exportPayment">⬇ Xuất Excel bảng tính tiền</button>
+  </div>
+  <div class="hours-sheet">
+    <h2 id="paymentHeading" style="background:#9fc5e8;border:1px solid #333;padding:12px;margin:0 0 0;text-align:center">Tiền dạy Thiết bị Sát Hạch</h2>
+    <table class="hours-table" style="min-width:600px" id="paymentTable">
+      <thead><tr style="background:#a9d18e"><th>STT</th><th>Tên Giáo Viên</th><th>Tổng giờ</th><th>Thanh toán tiền dạy</th></tr></thead>
+      <tbody id="paymentBody"></tbody><tfoot id="paymentFoot"></tfoot>
+    </table>
+    <p class="hint no-print">Bảng tự lấy số liệu từ cột “Giờ cuối cùng” của cả 3 hạng xe. Nếu một giáo viên xuất hiện ở nhiều hạng, số giờ sẽ được cộng gộp theo tên. Tiền dạy = tổng giờ × đơn giá.</p>
+  </div>
+</section>
+<script>
+const TIMES=['7h00 - 8h00','8h00 - 9h00','9h00 - 10h00','10h00 - 11h00','11h00 - 12h00','12h00 - 13h00','13h00 - 14h00','14h00 - 15h00','15h00 - 16h00','16h00 - 17h00','17h00 - 18h00','18h00 - 19h00'];
+const $=id=>document.getElementById(id);const today=new Date();const iso=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+$('date').value=iso(today);$('viewDate').value=iso(today);
+const norm=s=>String(s??'').normalize('NFC').trim().replace(/\s+/g,' ');const nameKey=s=>norm(s).toLocaleLowerCase('vi');const validSchedule=x=>x&&typeof x==='object'&&['id','date','car','teacher','time'].every(k=>typeof x[k]==='string'&&x[k]);
+function fmtH(n){return String(Math.round((Number(n)||0)*10)/10)}
+let schedules=[];try{const raw=JSON.parse(localStorage.getItem('btDrivingSchedules')||'[]');schedules=Array.isArray(raw)?raw.filter(validSchedule):[]}catch(e){schedules=[]}
+// Bổ sung hạng xe mặc định cho các lịch đã lưu từ phiên bản cũ.
+schedules=schedules.map(x=>({...x,vehicleClass:x.vehicleClass||'B tự động'}));
+const save=()=>localStorage.setItem('btDrivingSchedules',JSON.stringify(schedules));
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function showNotice(msg,type='error'){const n=$('notice');n.textContent=msg;n.className='notice '+type}
+function clearNotice(){$('notice').className='notice';$('notice').textContent=''}
+function resetForm(){ $('scheduleForm').reset();$('date').value=$('viewDate').value||iso(today);$('editId').value='';$('formTitle').textContent='➕ Nhập lịch tập';$('saveBtn').textContent='Lưu lịch tập';clearNotice() }
+function uniqueVals(key,list=schedules){const m=new Map();for(const x of list){const v=x[key];if(v&&!m.has(nameKey(v)))m.set(nameKey(v),v)}return [...m.values()].sort((a,b)=>a.localeCompare(b,'vi',{numeric:true}))}
+function render(){
+ const day=$('viewDate').value;const fc=$('filterCar').value.trim().toLowerCase();const ft=$('filterTeacher').value.trim().toLowerCase();const fclass=$('filterClass').value;
+ const filtered=schedules.filter(x=>x.date===day&&(!fclass||x.vehicleClass===fclass)&&(!fc||x.car.toLowerCase().includes(fc))&&(!ft||x.teacher.toLowerCase().includes(ft))).sort((a,b)=>a.car.localeCompare(b.car,'vi',{numeric:true})||TIMES.indexOf(a.time)-TIMES.indexOf(b.time));
+ const dayRows=schedules.filter(x=>x.date===day);$('statTotal').textContent=dayRows.length;$('statCars').textContent=uniqueVals('car',dayRows).length;$('statTeachers').textContent=uniqueVals('teacher',dayRows).length;
+ $('carOptions').innerHTML=uniqueVals('car').map(v=>`<option value="${esc(v)}">`).join('');$('teacherOptions').innerHTML=uniqueVals('teacher').map(v=>`<option value="${esc(v)}">`).join('');
+ $('printHeading').textContent='LỊCH ÔN XE THIẾT BỊ NGÀY '+(day?day.split('-').reverse().join('/'): '')+' – HẠNG B TỰ ĐỘNG, B SỐ SÀN, C1 – TRUNG TÂM ĐÀO TẠO LÁI XE BÌNH TÂN';
+ const classes=['B tự động','B số sàn','C1'];
+ // Bản in: cả 3 hạng xe cùng một trang A4 ngang.
+ let printHtml='';
+ const printGroups=[['B tự động','B số sàn','C1']];
+ for(const group of printGroups){
+   printHtml+=`<div class="print-page"><p class="print-date">${esc($('printHeading').textContent)}</p>`;
+   for(const cls of group){
+     const classRows=schedules.filter(x=>x.date===day&&x.vehicleClass===cls);
+     const cars=[...new Set(classRows.map(x=>x.car))].sort((a,b)=>a.localeCompare(b,'vi',{numeric:true}));
+     const classTitle=cls==='B tự động'?'HẠNG B – TỰ ĐỘNG':cls==='B số sàn'?'HẠNG B – SỐ SÀN':'HẠNG C1';
+     printHtml+=`<div class="print-class-label">${esc(classTitle)}</div><table><thead><tr><th>Số xe</th>${TIMES.map(t=>`<th>${esc(t)}</th>`).join('')}</tr></thead><tbody>`;
+     if(!cars.length) printHtml+=`<tr><td colspan="${TIMES.length+1}" style="height:24px">Chưa có lịch</td></tr>`;
+     for(const car of cars){printHtml+=`<tr><th>${esc(car)}</th>`;for(const time of TIMES){const teachers=classRows.filter(x=>x.car===car&&x.time===time).map(x=>x.teacher);printHtml+=`<td class="teacher-cell">${teachers.map(esc).join('<br>')}</td>`}printHtml+='</tr>'}
+     printHtml+=`<tr class="total-row"><th></th>${TIMES.map((_,i)=>`<td>${i+1}</td>`).join('')}</tr>`;
+     printHtml+='</tbody></table>';
+   }
+   printHtml+='</div>';
+ }
+ $('printGridArea').innerHTML=printHtml;
+ let grid='';
+ for(const cls of classes){if($('filterClass').value&&$('filterClass').value!==cls)continue;const classRows=filtered.filter(x=>x.vehicleClass===cls);const cars=[...new Set(classRows.map(x=>x.car))].sort((a,b)=>a.localeCompare(b,'vi',{numeric:true}));
+ grid+=`<div class="class-section"><h3 class="class-title">${esc(cls==='B số sàn'?'HẠNG B – SỐ SÀN':cls==='B tự động'?'HẠNG B – TỰ ĐỘNG':'HẠNG C1')}</h3><div class="tablewrap"><table><thead><tr><th>Số xe</th>`+TIMES.map(t=>`<th>${esc(t)}</th>`).join('')+'</tr></thead><tbody>';
+ if(!cars.length){grid+=`<tr><td colspan="11" style="padding:18px;color:#667085">Chưa có lịch cho hạng ${esc(cls)} trong ngày này.</td></tr>`}
+ for(const car of cars){grid+=`<tr><th>${esc(car)}</th>`;for(const time of TIMES){const items=classRows.filter(x=>x.car===car&&x.time===time);grid+=`<td class="gridcell">${items.map(x=>`<button class="entry" onclick="editSchedule('${x.id}')" title="Nhấn để sửa">${esc(x.teacher)}</button>`).join('')||'<span class="empty">—</span>'}</td>`}grid+='</tr>'}
+ const slotTotals=TIMES.map(time=>classRows.filter(x=>x.time===time).length);grid+=`<tr class="total-row"><th>Tổng số tiếng</th>${slotTotals.map(n=>`<td>${n} tiếng</td>`).join('')}</tr><tr class="grand-total-row"><th colspan="11">TỔNG CỘNG: ${classRows.length} TIẾNG</th></tr>`;
+ grid+='</tbody></table></div></div>';
+ } $('gridArea').innerHTML=grid;
+ $('detailBody').innerHTML=filtered.map(x=>`<tr><td>${esc(x.date.split('-').reverse().join('/'))}</td><td>${esc(x.vehicleClass==='B số sàn'?'B (Số sàn)':x.vehicleClass)}</td><td>${esc(x.time)}</td><td>${esc(x.car)}</td><td>${esc(x.teacher)}</td><td>${esc(x.note||'')}</td><td class="no-print actions"><button class="btn secondary" onclick="editSchedule('${x.id}')">Sửa</button><button class="btn danger" onclick="deleteSchedule('${x.id}')">Xóa</button></td></tr>`).join('')||'<tr><td colspan="7" style="padding:20px;color:#667085">Không có lịch nào trong ngày đang chọn.</td></tr>';
+}
+function validateSlot(item,pool){
+ if(pool.some(x=>x.date===item.date&&x.time===item.time&&x.car.toLowerCase()===item.car.toLowerCase()))return `Cảnh báo: xe ${item.car} đã có lịch trong khung giờ ${item.time}.`;
+ const sameTeacher=pool.filter(x=>x.date===item.date&&nameKey(x.teacher)===nameKey(item.teacher));
+ if(sameTeacher.filter(x=>x.time===item.time).length>=2)return `Giáo viên ${item.teacher} đã có 2 lịch trùng nhau trong khung giờ ${item.time}.`;
+ const counts={};for(const x of sameTeacher)counts[x.time]=(counts[x.time]||0)+1;counts[item.time]=(counts[item.time]||0)+1;
+ const dup=new Set(Object.keys(counts).filter(t=>counts[t]>1));
+ if(dup.has(item.time)){const idx=TIMES.indexOf(item.time);let a=idx,b=idx;while(a>0&&dup.has(TIMES[a-1]))a--;while(b<TIMES.length-1&&dup.has(TIMES[b+1]))b++;if(b-a+1>2)return `Giáo viên ${item.teacher} không được xếp trùng lịch quá 2 giờ liên tiếp.`}
+ return null;
+}
+const timeBoxes=()=>[...document.querySelectorAll('#timeChecks input')];
+$('scheduleForm').addEventListener('click',e=>{const b=e.target.closest('[data-pick]');if(!b)return;const m=b.dataset.pick;timeBoxes().forEach((c,i)=>{c.checked=m==='all'||(m==='am'&&i<=4)||(m==='pm'&&i>=6)});});
+// Mỗi khung giờ được tích sẽ tạo một lịch riêng; kiểm tra trùng từng lịch trước khi lưu tất cả.
+$('scheduleForm').addEventListener('submit',e=>{e.preventDefault();clearNotice();
+ const editId=$('editId').value,times=timeBoxes().filter(c=>c.checked).map(c=>c.value);
+ const base={date:$('date').value,vehicleClass:$('vehicleClass').value,car:norm($('car').value),teacher:norm($('teacher').value),note:$('note').value.trim()};
+ if(!base.date||!base.car||!base.teacher){showNotice('Vui lòng nhập ngày, số xe và tên giáo viên.');return}
+ if(!times.length){showNotice('Vui lòng tích chọn ít nhất một khung giờ.');return}
+ const orig=editId?schedules.find(x=>x.id===editId):null,keepTime=orig&&times.includes(orig.time)?orig.time:times[0];
+ const pool=schedules.filter(x=>x.id!==editId),stamp=Date.now();let seq=0;
+ for(const t of times){const item={...base,time:t,id:(editId&&t===keepTime)?editId:`${stamp}-${seq++}`};const err=validateSlot(item,pool);if(err){showNotice(err);return}pool.push(item);}
+ schedules=pool;save();$('viewDate').value=base.date;const keepClass=base.vehicleClass;resetForm();$('vehicleClass').value=keepClass;render();
+ showNotice(`Đã lưu ${times.length} lịch tập thành công.`,'ok');clearTimeout(window._nt);window._nt=setTimeout(clearNotice,3000);});
+window.editSchedule=id=>{const x=schedules.find(s=>s.id===id);if(!x)return;$('editId').value=x.id;$('date').value=x.date;$('car').value=x.car;$('vehicleClass').value=x.vehicleClass||'B tự động';$('teacher').value=x.teacher;timeBoxes().forEach(c=>{c.checked=c.value===x.time});$('note').value=x.note||'';$('formTitle').textContent='✏️ Sửa lịch tập';$('saveBtn').textContent='Cập nhật lịch';clearNotice();window.scrollTo({top:0,behavior:'smooth'})};
+window.deleteSchedule=id=>{const x=schedules.find(s=>s.id===id);if(!x)return;if(confirm(`Xóa lịch xe ${x.car} – ${x.teacher} ngày ${x.date.split('-').reverse().join('/')}?`)){schedules=schedules.filter(s=>s.id!==id);save();render();if($('editId').value===id)resetForm()}};
+$('resetBtn').onclick=resetForm;$('viewDate').onchange=render;$('filterClass').onchange=render;$('filterCar').oninput=render;$('filterTeacher').oninput=render;$('todayBtn').onclick=()=>{$('viewDate').value=iso(today);render()};$('clearFilters').onclick=()=>{$('filterCar').value='';$('filterTeacher').value='';$('filterClass').value='';render()};
+$('printBtn').onclick=()=>window.print();
+$('clearAllBtn').onclick=()=>{if(!schedules.length){alert('Danh sách lịch đang trống.');return}if(confirm(`Bạn có chắc chắn muốn xóa TOÀN BỘ ${schedules.length} lịch tập đã lưu? Thao tác này không thể hoàn tác.`)){schedules=[];save();resetForm();render();alert('Đã xóa toàn bộ danh sách lịch chi tiết.')}};
+$('exportBtn').onclick=()=>{
+ const day=$('viewDate').value;
+ const daySchedules=schedules.filter(x=>x.date===day);
+ if(!daySchedules.length){alert('Ngày đang chọn chưa có lịch để xuất.');return}
+ if(!window.XLSX){alert('Không tải được thư viện Excel. Vui lòng kết nối Internet rồi thử lại.');return}
+ const wb=XLSX.utils.book_new();
+ const heading=$('printHeading').textContent;
+ const aoa=[[heading]];
+ const merges=[{s:{r:0,c:0},e:{r:0,c:TIMES.length}}];
+ const rowTypes={0:'title'};
+ const classes=['B tự động','B số sàn','C1'];
+ for(const cls of classes){
+   const rows=daySchedules.filter(x=>x.vehicleClass===cls);
+   const cars=[...new Set(rows.map(x=>x.car))].sort((a,b)=>a.localeCompare(b,'vi',{numeric:true}));
+   const classTitle=cls==='B tự động'?'HẠNG B – TỰ ĐỘNG':cls==='B số sàn'?'HẠNG B – SỐ SÀN':'HẠNG C1';
+   let r=aoa.length; aoa.push([classTitle]); merges.push({s:{r,c:0},e:{r,c:TIMES.length}}); rowTypes[r]='class';
+   r=aoa.length; aoa.push(['Số xe',...TIMES]); rowTypes[r]='header';
+   if(!cars.length){r=aoa.length;aoa.push(['Chưa có lịch']);merges.push({s:{r,c:0},e:{r,c:TIMES.length}});rowTypes[r]='empty';}
+   for(const car of cars){
+     r=aoa.length;
+     aoa.push([car,...TIMES.map(time=>rows.filter(x=>x.car===car&&x.time===time).map(x=>x.teacher).join('\n'))]);
+     rowTypes[r]='data';
+   }
+   r=aoa.length;aoa.push(['',...TIMES.map((_,i)=>i+1)]);rowTypes[r]='numbers';
+   // spacer between class tables, matching the print layout
+   if(cls!=='C1'){r=aoa.length;aoa.push([]);rowTypes[r]='spacer';}
+ }
+ const ws=XLSX.utils.aoa_to_sheet(aoa);
+ ws['!merges']=merges;
+ ws['!cols']=[{wch:11},...TIMES.map(()=>({wch:13}))];
+ ws['!rows']=aoa.map((row,r)=>({hpt:rowTypes[r]==='title'?32:rowTypes[r]==='class'?20:rowTypes[r]==='header'?24:rowTypes[r]==='data'?25:rowTypes[r]==='numbers'?22:rowTypes[r]==='spacer'?7:22}));
+ ws['!pageSetup']={orientation:'landscape',paperSize:9,fitToWidth:1,fitToHeight:1};
+ ws['!margins']={left:0.25,right:0.25,top:0.35,bottom:0.35,header:0.1,footer:0.1};
+ ws['!printOptions']={gridLines:false};
+ for(let r=0;r<aoa.length;r++){
+   const typ=rowTypes[r];
+   for(let c=0;c<=TIMES.length;c++){
+     const ref=XLSX.utils.encode_cell({r,c});
+     if(!ws[ref])continue;
+     const style={alignment:{horizontal:'center',vertical:'center',wrapText:true},border:{top:{style:'thin',color:{rgb:'333333'}},bottom:{style:'thin',color:{rgb:'333333'}},left:{style:'thin',color:{rgb:'333333'}},right:{style:'thin',color:{rgb:'333333'}}}};
+     if(typ==='title')Object.assign(style,{font:{bold:true,sz:16},fill:{fgColor:{rgb:'9FC5E8'}}});
+     if(typ==='class')Object.assign(style,{font:{bold:true,sz:11},alignment:{horizontal:'center',vertical:'center',wrapText:true}});
+     if(typ==='header')Object.assign(style,{font:{bold:true,sz:9},fill:{fgColor:{rgb:'EAF2FF'}}});
+     if(typ==='numbers')Object.assign(style,{font:{bold:true,sz:10},fill:{fgColor:{rgb:'F0F6FF'}}});
+     if(typ==='data'&&c===0)style.font={bold:true};
+     ws[ref].s=style;
+   }
+ }
+ XLSX.utils.book_append_sheet(wb,ws,'Lịch ôn xe');
+ XLSX.writeFile(wb,`Lich_on_xe_Binh_Tan_${day}.xlsx`);
+};
+
+// Sổ giờ giáo viên cho đủ 3 hạng xe; lưu riêng theo từng hạng.
+const hoursClasses=[
+ {key:'B tự động',title:'GIỜ ÔN HẠNG B TỰ ĐỘNG',label:'Giáo viên đăng ký giờ B tự động'},
+ {key:'B số sàn',title:'GIỜ ÔN HẠNG B SỐ SÀN',label:'Giáo viên đăng ký giờ B số sàn'},
+ {key:'C1',title:'GIỜ ÔN HẠNG C1',label:'Giáo viên đăng ký giờ C1'}
+];
+const teacherHoursKey='btTeacherHoursByClassV2';
+let teacherHoursByClass={};
+try { teacherHoursByClass=JSON.parse(localStorage.getItem(teacherHoursKey)||'{}')||{}; } catch(e) { teacherHoursByClass={}; }
+// Chuyển dữ liệu B01 từ phiên bản trước nếu có.
+if(!teacherHoursByClass['B tự động']){
+ let old=[];try{old=JSON.parse(localStorage.getItem('btTeacherHoursB01')||'[]')}catch(e){}
+ teacherHoursByClass['B tự động']=old.length?old:[
+  {name:'Thuận',registered:4,final:''},{name:'Hiếu',registered:17,final:''},{name:'Trí',registered:1,final:''},{name:'Triều',registered:5,final:''},{name:'Sương',registered:7,final:''},{name:'Q.BẢO',registered:2,final:''},{name:'Sô',registered:2,final:''}
+ ];
+}
+if(!teacherHoursByClass['B số sàn'] && Array.isArray(teacherHoursByClass.B02))teacherHoursByClass['B số sàn']=teacherHoursByClass.B02;
+for(const c of hoursClasses)if(!Array.isArray(teacherHoursByClass[c.key]))teacherHoursByClass[c.key]=[];
+function saveTeacherHours(){localStorage.setItem(teacherHoursKey,JSON.stringify(teacherHoursByClass));}
+function renderTeacherHours(){
+ const host=$('teacherHoursTables');
+ host.innerHTML=hoursClasses.map(c=>{
+  const rows=teacherHoursByClass[c.key];
+  const registeredTotal=rows.reduce((sum,x)=>sum+(Number(x.registered)||0),0);
+  const finalTotal=rows.reduce((sum,x)=>sum+(Number(x.final)||0),0);
+  return `<div class="hours-class-block"><h2>${c.title}</h2><table class="hours-table"><thead><tr><th style="width:7%">I</th><th>${c.label}</th><th style="width:20%">Giờ đăng kí</th><th style="width:23%">Giờ cuối cùng</th><th class="no-print" style="width:9%">Xóa</th></tr></thead><tbody>${rows.map((x,i)=>`<tr><td>${i+1}</td><td class="name"><input class="teacher-name" aria-label="Tên giáo viên" value="${esc(x.name)}" data-class="${c.key}" data-index="${i}" data-field="name"></td><td><input type="number" min="0" step="0.5" value="${esc(x.registered)}" aria-label="Giờ đăng kí" data-class="${c.key}" data-index="${i}" data-field="registered"></td><td><input type="number" min="0" step="0.5" value="${esc(x.final)}" aria-label="Giờ cuối cùng" data-class="${c.key}" data-index="${i}" data-field="final"></td><td class="no-print"><button class="btn danger" type="button" data-delete-class="${c.key}" data-delete="${i}">Xóa</button></td></tr>`).join('')}</tbody><tfoot><tr class="sum-row"><td colspan="2">Cộng ${c.key}</td><td>${fmtH(registeredTotal)}</td><td>${fmtH(finalTotal)}</td><td class="no-print"></td></tr></tfoot></table><div class="hours-actions no-print"><button class="btn secondary" type="button" data-add-class="${c.key}">＋ Thêm giáo viên ${c.key}</button></div></div>`;
+ }).join('');
+}
+$('teacherHoursTables').addEventListener('input',e=>{const el=e.target;if(el.dataset.index===undefined)return;const arr=teacherHoursByClass[el.dataset.class];const i=Number(el.dataset.index),field=el.dataset.field;if(!arr||!arr[i])return;arr[i][field]=field==='name'?el.value:(el.value===''?'':Number(el.value));saveTeacherHours();if(field==='registered'||field==='final'){const block=el.closest('.hours-class-block');const c=hoursClasses.find(x=>x.key===el.dataset.class);const rows=teacherHoursByClass[c.key];block.querySelector('tfoot').innerHTML=`<tr class="sum-row"><td colspan="2">Cộng ${c.key}</td><td>${fmtH(rows.reduce((sum,x)=>sum+(Number(x.registered)||0),0))}</td><td>${fmtH(rows.reduce((sum,x)=>sum+(Number(x.final)||0),0))}</td><td class="no-print"></td></tr>`;}});
+// Tên giáo viên không phân biệt chữ hoa/chữ thường. Khi nhập tên trùng, dùng chung một tên và gộp giờ nếu trùng trong cùng hạng.
+function teacherNameKey(value){return nameKey(value);}
+$('teacherHoursTables').addEventListener('change',e=>{
+ const el=e.target;
+ if(!el.classList.contains('teacher-name') || el.dataset.index===undefined)return;
+ const classKey=el.dataset.class, arr=teacherHoursByClass[classKey];let i=Number(el.dataset.index);
+ if(!arr||!arr[i])return;
+ let name=norm(arr[i].name);
+ if(!name){arr[i].name='';saveTeacherHours();return;}
+ const key=teacherNameKey(name);
+ // Giữ cách viết tên đã có trước đó ở bất kỳ hạng xe nào (ví dụ Nam và nam -> Nam).
+ for(const c of hoursClasses){
+  const found=teacherHoursByClass[c.key].find((x,idx)=>!(c.key===classKey&&idx===i)&&teacherNameKey(x.name)===key);
+  if(found){name=String(found.name).trim().replace(/\s+/g,' ');break;}
+ }
+ arr[i].name=name;
+ // Nếu cùng hạng đã có tên này, gộp giờ vào một dòng để không tạo hai giáo viên trùng tên.
+ const canonicalKey=teacherNameKey(name);
+ for(let j=arr.length-1;j>=0;j--){
+  if(j===i||teacherNameKey(arr[j].name)!==canonicalKey)continue;
+  const target=arr[i], duplicate=arr[j];
+  target.registered=(Number(target.registered)||0)+(Number(duplicate.registered)||0);
+  target.final=(Number(target.final)||0)+(Number(duplicate.final)||0);
+  arr.splice(j,1);
+  if(j<i) i--;
+ }
+ saveTeacherHours();renderTeacherHours();
+});
+$('teacherHoursTables').addEventListener('click',e=>{const del=e.target.closest('[data-delete]');if(del){teacherHoursByClass[del.dataset.deleteClass].splice(Number(del.dataset.delete),1);saveTeacherHours();renderTeacherHours();return;}const add=e.target.closest('[data-add-class]');if(add){teacherHoursByClass[add.dataset.addClass].push({name:'',registered:'',final:''});saveTeacherHours();renderTeacherHours();const inputs=document.querySelectorAll(`[data-class="${add.dataset.addClass}"].teacher-name`);if(inputs.length)inputs[inputs.length-1].focus();}});
+$('openTeacherHours').onclick=()=>{document.body.classList.remove('print-hours');$('teacherPaymentPage').style.display='none';document.querySelector('.wrap').style.display='none';$('teacherHoursPage').style.display='block';renderTeacherHours();window.scrollTo(0,0);};
+$('openPaymentFromHome').onclick=()=>{document.body.classList.remove('print-hours');document.querySelector('.wrap').style.display='none';$('teacherHoursPage').style.display='none';$('teacherPaymentPage').style.display='block';renderPayment();window.scrollTo(0,0);};
+$('backToSchedule').onclick=()=>{document.body.classList.remove('print-hours');$('teacherHoursPage').style.display='none';document.querySelector('.wrap').style.display='';window.scrollTo(0,0);};
+$('clearTeacherHours').onclick=()=>{if(confirm('Bạn có chắc muốn xóa toàn bộ dữ liệu sổ giờ của cả 3 hạng xe?')){hoursClasses.forEach(c=>teacherHoursByClass[c.key]=[]);saveTeacherHours();renderTeacherHours();}};
+$('printTeacherHours').onclick=()=>{document.body.classList.add('print-hours');window.print();};
+$('exportTeacherHours').onclick=()=>{
+ if(!window.XLSX){alert('Không tải được thư viện Excel. Vui lòng kết nối Internet rồi thử lại.');return;}
+ const wb=XLSX.utils.book_new();
+ for(const c of hoursClasses){const rows=teacherHoursByClass[c.key];const aoa=[['CÔNG TY TNHH ĐÀO TẠO LÁI XE BÌNH TÂN'],[c.title],['I',c.label,'Giờ đăng kí','Giờ cuối cùng'],...rows.map((x,i)=>[i+1,x.name,Number(x.registered)||0,Number(x.final)||0]),['','Cộng '+c.key,rows.reduce((s,x)=>s+(Number(x.registered)||0),0),rows.reduce((s,x)=>s+(Number(x.final)||0),0)]];const ws=XLSX.utils.aoa_to_sheet(aoa);ws['!merges']=[{s:{r:0,c:0},e:{r:0,c:3}},{s:{r:1,c:0},e:{r:1,c:3}}];ws['!cols']=[{wch:8},{wch:32},{wch:18},{wch:20}];ws['!rows']=[{hpt:24},{hpt:24},{hpt:22},...rows.map(()=>({hpt:21})),{hpt:23}];
+  for(let r=0;r<aoa.length;r++)for(let col=0;col<4;col++){const ref=XLSX.utils.encode_cell({r,c:col});if(!ws[ref])continue;ws[ref].s={alignment:{horizontal:'center',vertical:'center',wrapText:true},border:{top:{style:'thin',color:{rgb:'333333'}},bottom:{style:'thin',color:{rgb:'333333'}},left:{style:'thin',color:{rgb:'333333'}},right:{style:'thin',color:{rgb:'333333'}}}};if(r===0)ws[ref].s.font={bold:true,sz:14};if(r===1)ws[ref].s.font={bold:true,sz:13};if(r===2)ws[ref].s={...ws[ref].s,font:{bold:true},fill:{fgColor:{rgb:'EAF2FF'}}};if(r===aoa.length-1)ws[ref].s={...ws[ref].s,font:{bold:true},fill:{fgColor:{rgb:'F0F6FF'}}};}
+  XLSX.utils.book_append_sheet(wb,ws,c.key);
+ }
+ XLSX.writeFile(wb,'So_gio_giao_vien_Binh_Tan.xlsx');
+};
+function paymentRows(){
+ const map=new Map();
+ for(const c of hoursClasses){for(const x of teacherHoursByClass[c.key]){const name=norm(x.name);if(!name)continue;const key=nameKey(name);if(!map.has(key))map.set(key,{name,hours:0});map.get(key).hours+=(Number(x.final)||0);}}
+ return [...map.values()].sort((a,b)=>a.name.localeCompare(b.name,'vi',{sensitivity:'base'}));
+}
+function formatMoney(n){return Math.round(Number(n)||0).toLocaleString('vi-VN');}
+function renderPayment(){
+ const title=$('paymentTitleDate').value.trim()||'Tiền dạy Thiết bị Sát Hạch';
+ $('paymentHeading').textContent=title;
+ const rate=Math.max(0,Number($('hourlyRate').value)||0), rows=paymentRows();
+ $('paymentBody').innerHTML=rows.map((x,i)=>`<tr><td>${i+1}</td><td class="name">${esc(x.name)}</td><td>${x.hours.toFixed(1).replace(/\.0$/,'')}</td><td style="text-align:right;font-weight:bold">${formatMoney(x.hours*rate)}</td></tr>`).join('')||'<tr><td colspan="4">Chưa có giờ cuối cùng để tính tiền</td></tr>';
+ const totalHours=rows.reduce((sum,x)=>sum+x.hours,0), totalMoney=totalHours*rate;
+ $('paymentFoot').innerHTML=`<tr class="sum-row"><td colspan="2">TỔNG CỘNG</td><td>${totalHours.toFixed(1).replace(/\.0$/,'')}</td><td style="text-align:right;color:#f04438">${formatMoney(totalMoney)}</td></tr>`;
+}
+$('backToHours').onclick=()=>{$('teacherPaymentPage').style.display='none';$('teacherHoursPage').style.display='block';document.querySelector('.wrap').style.display='none';renderTeacherHours();window.scrollTo(0,0);};
+$('paymentTitleDate').oninput=renderPayment;$('hourlyRate').oninput=renderPayment;
+$('printPayment').onclick=()=>{document.body.classList.add('print-payment');window.print();};
+$('exportPayment').onclick=()=>{
+ if(!window.XLSX){alert('Không tải được thư viện Excel. Vui lòng kết nối Internet rồi thử lại.');return;}
+ const rows=paymentRows(),rate=Math.max(0,Number($('hourlyRate').value)||0),title=$('paymentTitleDate').value.trim()||'Tiền dạy Thiết bị Sát Hạch';
+ const aoa=[[title],['STT','Tên Giáo Viên','Tổng giờ','Thanh toán tiền dạy'],...rows.map((x,i)=>[i+1,x.name,x.hours,Math.round(x.hours*rate)]),['','TỔNG CỘNG',rows.reduce((s,x)=>s+x.hours,0),Math.round(rows.reduce((s,x)=>s+x.hours,0)*rate)],['','Đơn giá mỗi giờ',rate,'']];
+ const ws=XLSX.utils.aoa_to_sheet(aoa);ws['!merges']=[{s:{r:0,c:0},e:{r:0,c:3}}];ws['!cols']=[{wch:9},{wch:30},{wch:15},{wch:25}];ws['!rows']=[{hpt:30},{hpt:24},...rows.map(()=>({hpt:21})),{hpt:24},{hpt:20}];
+ for(let r=0;r<aoa.length;r++)for(let c=0;c<4;c++){const ref=XLSX.utils.encode_cell({r,c});if(!ws[ref])continue;let style={alignment:{horizontal:c===3?'right':'center',vertical:'center',wrapText:true},border:{top:{style:'thin',color:{rgb:'333333'}},bottom:{style:'thin',color:{rgb:'333333'}},left:{style:'thin',color:{rgb:'333333'}},right:{style:'thin',color:{rgb:'333333'}}}};if(r===0)style={...style,font:{bold:true,sz:14},fill:{fgColor:{rgb:'9FC5E8'}}};if(r===1)style={...style,font:{bold:true},fill:{fgColor:{rgb:'A9D18E'}}};if(r===aoa.length-2)style={...style,font:{bold:true},fill:{fgColor:{rgb:'F0F6FF'}}};ws[ref].s=style;}
+
+ const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Thanh toán');XLSX.writeFile(wb,'Bang_tinh_tien_giao_vien_Binh_Tan.xlsx');
+};
+$('openSchedule').onclick=()=>{$('teacherHoursPage').style.display='none';$('teacherPaymentPage').style.display='none';document.querySelector('.wrap').style.display='';render();window.scrollTo(0,0);};
+$('backupBtn').onclick=()=>{const blob=new Blob([JSON.stringify({version:1,exportedAt:new Date().toISOString(),schedules,teacherHours:teacherHoursByClass},null,1)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`Sao_luu_Binh_Tan_${iso(new Date())}.json`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000);};
+$('restoreBtn').onclick=()=>$('restoreFile').click();
+$('restoreFile').onchange=async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;try{const d=JSON.parse(await f.text());if(!d||!Array.isArray(d.schedules)||!d.teacherHours||typeof d.teacherHours!=='object')throw 0;const list=d.schedules.filter(validSchedule).map(x=>({...x,vehicleClass:x.vehicleClass||'B tự động'}));if(!confirm(`Khôi phục ${list.length} lịch tập và sổ giờ từ file sao lưu? Dữ liệu hiện tại sẽ bị thay thế.`))return;schedules=list;for(const c of hoursClasses)teacherHoursByClass[c.key]=Array.isArray(d.teacherHours[c.key])?d.teacherHours[c.key]:[];save();saveTeacherHours();render();renderTeacherHours();alert('Đã khôi phục dữ liệu.');}catch(err){alert('File sao lưu không hợp lệ.');}};
+$('hoursMonth').value=iso(today).slice(0,7);
+$('fillFromSchedule').onclick=()=>{const m=$('hoursMonth').value;if(!m){alert('Hãy chọn tháng trước.');return}if(!confirm(`Cập nhật cột "Giờ đăng kí" của cả 3 hạng theo số tiếng trong lịch tập tháng ${m.split('-').reverse().join('/')}? Giáo viên chưa có trong bảng sẽ được thêm mới; "Giờ cuối cùng" được giữ nguyên.`))return;
+ for(const c of hoursClasses){const counts=new Map();for(const x of schedules)if(x.vehicleClass===c.key&&x.date.startsWith(m)){const k=nameKey(x.teacher);const o=counts.get(k)||{name:x.teacher,n:0};o.n++;counts.set(k,o)}
+  const arr=teacherHoursByClass[c.key];for(const row of arr){const k=nameKey(row.name),o=counts.get(k);if(o){row.registered=o.n;counts.delete(k)}}
+  for(const o of counts.values())arr.push({name:o.name,registered:o.n,final:''});}
+ saveTeacherHours();renderTeacherHours();};
+window.addEventListener('afterprint',()=>{document.body.classList.remove('print-hours');document.body.classList.remove('print-payment');});
+
+render();
+</script></body></html>
